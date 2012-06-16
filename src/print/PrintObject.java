@@ -11,6 +11,7 @@ public class PrintObject {
     private Field[] fields;
     private Method[] methods;
     private HashMap<String, Integer> colLengths;
+    private PrintObjectDecorator decorator;
 
     public PrintObject(Object data) {
         this.data = data;
@@ -30,25 +31,16 @@ public class PrintObject {
         }
     }
 
-    public int getRowLength() {
-        int rowLength = 0;
-        for(Integer i : this.colLengths.values()) {
-            rowLength += i;
-        }
-        rowLength += (this.colLengths.values().size())*3;
-        rowLength += 1;
-        return rowLength;
+    public PrintObject(Object data, PrintObjectDecorator decorator) {
+        this(data);
+        this.decorator = decorator;
     }
 
-    public String getRowSeparator() {
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < this.getRowLength(); i++) {
-            sb.append("-");
-        }
-        return sb.toString();
+    public HashMap<String, Integer> getColumnsLengths() {
+        return this.colLengths;
     }
 
-    public int getColLength(String key) {
+    public int getColumnLength(String key) {
         return this.colLengths.get(key);
     }
 
@@ -56,45 +48,33 @@ public class PrintObject {
         return this.data;
     }
 
-    public String getHeader() {
-        StringBuilder sb = new StringBuilder();
-        int max = this.getRowLength();
-        int start = (max - this.getData().getClass().getName().toString().length())/2;
-        int end = start + this.getData().getClass().getName().toString().length();
+    public PrintObjectDecorator getDecorator() {
+        return decorator;
+    }
 
-        for (int i = 0; i < start-1 ; i++) {
-            sb.append("#");
+    public void setDecorator(PrintObjectDecorator decorator) {
+        this.decorator = decorator;
+    }
+
+    @Override
+    public String toString() {
+        if(this.decorator != null) {
+            return this.decorator.getOutput();
+        } else {
+            try {
+                throw new Exception("PrintObjectDecorator not set.");
+            } catch (Exception e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            return null;
         }
-
-        sb.append(" " + this.getData().getClass().getName().toString() + " ");
-
-        for (int i = end; i < max-1 ; i++) {
-            sb.append("#");
-        }
-
-        return sb.toString();
     }
 
     public static void main(String[] args) {
-        //String derp = new String("derp");
-        PrintObject derp = new PrintObject("hello");
+        PrintObject derp = new PrintObject("derp");
         PrintObject po = new PrintObject(derp);
-
-        String hdr = "| %"+po.getColLength("type")+"S | %-"+po.getColLength("name")+"S |%n";
-        String row = "| %"+po.getColLength("type")+"s | %-"+po.getColLength("name")+"s |%n";
-
-        System.out.println(po.getRowSeparator());
-        System.out.println(po.getHeader());
-        System.out.println(po.getRowSeparator());
-        System.out.format(hdr, "type", "name");
-        System.out.println(po.getRowSeparator());
-        for(Field f : po.getData().getClass().getDeclaredFields()) {
-            System.out.format(row, f.getType(), f.getName());
-        }
-        System.out.println(po.getRowSeparator());
-        System.out.format(hdr, "type", "name");
-        System.out.println(po.getRowSeparator());
-        //System.out.print(new PrintObject(derp));
+        po.setDecorator(new DefaultPrintObjectDecorator(po));
+        System.out.println(po);
     }
 
 }
