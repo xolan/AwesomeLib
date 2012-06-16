@@ -19,12 +19,16 @@ public class PrintObject {
         this.methods = this.data.getClass().getDeclaredMethods();
         this.colLengths = new HashMap<>();
 
-        this.colLengths.put("name", 0);
-        this.colLengths.put("type", 0);
+        this.colLengths.put("name", 4);
+        this.colLengths.put("type", 4);
         try {
             for(Field f : this.fields) {
                 if(this.colLengths.get("name") < f.getName().toString().length()) colLengths.put("name", f.getName().toString().length());
                 if(this.colLengths.get("type") < f.getType().toString().length()) colLengths.put("type", f.getType().toString().length());
+            }
+            for(Method m : this.methods) {
+                if(this.colLengths.get("name") < m.getName().toString().length()) colLengths.put("name", m.getName().toString().length());
+                if(this.colLengths.get("type") < m.getReturnType().toString().length()) colLengths.put("type", m.getReturnType().toString().length());
             }
         } catch(Exception e) {
             System.err.println(e);
@@ -34,6 +38,14 @@ public class PrintObject {
     public PrintObject(Object data, PrintObjectDecorator decorator) {
         this(data);
         this.decorator = decorator;
+    }
+
+    public Field[] getFields() {
+        return fields;
+    }
+
+    public Method[] getMethods() {
+        return methods;
     }
 
     public HashMap<String, Integer> getColumnsLengths() {
@@ -71,8 +83,7 @@ public class PrintObject {
     }
 
     public static void main(String[] args) {
-        PrintObject derp = new PrintObject("derp");
-        PrintObject po = new PrintObject(derp);
+        PrintObject po = new PrintObject(System.out);
         po.setDecorator(new DefaultPrintObjectDecorator(po));
         System.out.println(po);
     }
