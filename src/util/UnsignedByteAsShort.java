@@ -9,8 +9,8 @@ package util;
  */
 public class UnsignedByteAsShort {
 
-    private byte value;
-    private short result;
+    private final byte value;
+    private final short result;
 
     public UnsignedByteAsShort(byte value) {
         this.value = value;

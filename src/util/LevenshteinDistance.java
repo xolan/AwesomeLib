@@ -6,15 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Jonas
+ * Author: Jonas Svarvaa
  * Date: 05.05.12
  * Time: 01:40
- * To change this template use File | Settings | File Templates.
  */
 public class LevenshteinDistance {
-
-    private static LevenshteinDistanceComparator comp;
 
     public static int compare(String s1, String s2) {
         int[][] dp = new int[s1.length() + 1][s2.length() + 1];
@@ -36,7 +32,7 @@ public class LevenshteinDistance {
     }
 
     public static List<String> compare(String match, List<String> list) {
-        comp = new LevenshteinDistanceComparator(match);
+        LevenshteinDistanceComparator comp = new LevenshteinDistanceComparator(match);
         Collections.sort(list, comp);
         return list;
     }
