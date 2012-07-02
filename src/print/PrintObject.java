@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 public class PrintObject {
 
-    private Object data;
-    private Field[] fields;
-    private Method[] methods;
-    private HashMap<String, Integer> colLengths;
+    final Object data;
+    private final Field[] fields;
+    private final Method[] methods;
+    private final HashMap<String, Integer> colLengths;
     private PrintObjectDecorator decorator;
 
     public PrintObject(Object data) {
@@ -21,17 +21,19 @@ public class PrintObject {
 
         this.colLengths.put("name", 4);
         this.colLengths.put("type", 4);
+        this.colLengths.put("value", 10);
         try {
             for(Field f : this.fields) {
-                if(this.colLengths.get("name") < f.getName().toString().length()) colLengths.put("name", f.getName().toString().length());
+                if(this.colLengths.get("name") < f.getName().length()) colLengths.put("name", f.getName().length());
                 if(this.colLengths.get("type") < f.getType().toString().length()) colLengths.put("type", f.getType().toString().length());
+               // if(this.colLengths.get("value") < f.get(data).toString().length()) colLengths.put("value", f.get(data).toString().length());
             }
             for(Method m : this.methods) {
-                if(this.colLengths.get("name") < m.getName().toString().length()) colLengths.put("name", m.getName().toString().length());
+                if(this.colLengths.get("name") < m.getName().length()) colLengths.put("name", m.getName().length());
                 if(this.colLengths.get("type") < m.getReturnType().toString().length()) colLengths.put("type", m.getReturnType().toString().length());
             }
-        } catch(Exception e) {
-            System.err.println(e);
+        } catch(Exception iae) {
+            System.err.println(iae);
         }
     }
 

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 public class DefaultPrintObjectDecorator implements PrintObjectDecorator {
 
-    private PrintObject po;
+    private final PrintObject po;
 
     public DefaultPrintObjectDecorator(PrintObject po) {
         this.po = po;
@@ -37,14 +37,14 @@ public class DefaultPrintObjectDecorator implements PrintObjectDecorator {
     public String getHeader() {
         StringBuilder sb = new StringBuilder();
         int max = this.getRowLength();
-        int start = (max - po.getData().getClass().getName().toString().length())/2;
-        int end = start + po.getData().getClass().getName().toString().length();
+        int start = (max - po.getData().getClass().getName().length())/2;
+        int end = start + po.getData().getClass().getName().length();
 
         for (int i = 0; i < start-1 ; i++) {
             sb.append("#");
         }
 
-        sb.append(" " + po.getData().getClass().getName().toString() + " ");
+        sb.append(" ").append(po.getData().getClass().getName()).append(" ");
 
         for (int i = end; i < max-1 ; i++) {
             sb.append("#");
@@ -64,7 +64,7 @@ public class DefaultPrintObjectDecorator implements PrintObjectDecorator {
             sb.append("=");
         }
 
-        sb.append(" " + subHeader + " ");
+        sb.append(" ").append(subHeader).append(" ");
 
         for (int i = end; i < max-1 ; i++) {
             sb.append("=");
@@ -76,31 +76,37 @@ public class DefaultPrintObjectDecorator implements PrintObjectDecorator {
     @Override
     public String getOutput() {
 
-        StringBuilder output = new StringBuilder();
+        try {
+            StringBuilder output = new StringBuilder();
 
-        String fhdr = "| %"+po.getColumnLength("type")+"S | %-"+po.getColumnLength("name")+"S |%n";
-        String frow = "| %"+po.getColumnLength("type")+"s | %-"+po.getColumnLength("name")+"s |%n";
-        String mhdr = "| %"+po.getColumnLength("type")+"S | %-"+po.getColumnLength("name")+"S |%n";
-        String mrow = "| %"+po.getColumnLength("type")+"s | %-"+po.getColumnLength("name")+"s |%n";
+            //TODO: Clean this up. Remember to remove the +13 once everything works correctly.
+            String fhdr = "| %"+po.getColumnLength("type")+"S | %-"+po.getColumnLength("name")+"S | %-"+po.getColumnLength("value")+"S |%n";
+            String frow = "| %"+po.getColumnLength("type")+"s | %-"+po.getColumnLength("name")+"s | %-"+po.getColumnLength("value")+"s |%n";
+            String mhdr = "| %"+po.getColumnLength("type")+"S | %-"+(po.getColumnLength("name")+13)+"S |%n";
+            String mrow = "| %"+po.getColumnLength("type")+"s | %-"+(po.getColumnLength("name")+13)+"s |%n";
 
-        output.append(this.getRowSeparator());
-        output.append(this.getHeader());
-        output.append(this.getRowSeparator());
-        output.append(this.getSubHeader("Fields"));
-        output.append(String.format(fhdr, "type", "name", "hash"));
-        output.append(this.getRowSeparator());
-        for(Field f : po.getFields()) {
-            output.append(String.format(frow, f.getType(), f.getName(), f.hashCode()));
+            output.append(this.getRowSeparator());
+            output.append(this.getHeader());
+            output.append(this.getRowSeparator());
+            output.append(this.getSubHeader("Fields"));
+            output.append(String.format(fhdr, "type", "name", "value"));
+            output.append(this.getRowSeparator());
+            for(Field f : po.getFields()) {
+                output.append(String.format(frow, f.getType(), f.getName(), "value here"));
+            }
+            output.append(this.getSubHeader("Methods"));
+            output.append(String.format(mhdr, "return type", "name"));
+            output.append(this.getRowSeparator());
+            for(Method m : po.getMethods()) {
+                output.append(String.format(mrow, m.getReturnType(), m.getName()));
+            }
+            output.append(this.getRowSeparator());
+
+            return output.toString();
+        } catch (Exception e) {
+            System.err.println(e);
+            return "";
         }
-        output.append(this.getRowSeparator());
-        output.append(this.getSubHeader("Methods"));
-        output.append(String.format(mhdr, "return type", "name"));
-        output.append(this.getRowSeparator());
-        for(Method m : po.getMethods()) {
-               output.append(String.format(mrow, m.getReturnType(), m.getName()));
-        }
-        output.append(this.getRowSeparator());
 
-        return output.toString();
     }
 }
