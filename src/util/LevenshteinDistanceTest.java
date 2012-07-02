@@ -7,11 +7,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Jonas
- * Date: 22.05.12
- * Time: 08:17
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: Jonas Date: 22.05.12 Time: 08:17 To change
+ * this template use File | Settings | File Templates.
  */
 public class LevenshteinDistanceTest {
 
@@ -32,7 +29,7 @@ public class LevenshteinDistanceTest {
         Assert.assertTrue(strings.contains("Gjemblen"));
         Assert.assertTrue(strings.contains("Svarvaa"));
 
-        for(String s : LevenshteinDistance.compare("Svarvaa",strings)) {
+        for (String s : LevenshteinDistance.compare("Svarvaa", strings)) {
             Assert.assertTrue(strings.get(0).equals("Svarvaa"));
             Assert.assertTrue(strings.get(1).equals("Jonas"));
             Assert.assertTrue(strings.get(2).equals("Chuppa"));
@@ -40,7 +37,7 @@ public class LevenshteinDistanceTest {
             Assert.assertTrue(strings.get(4).equals("Gjemblen"));
         }
 
-        for(String s : LevenshteinDistance.compare("Gjemblen",strings)) {
+        for (String s : LevenshteinDistance.compare("Gjemblen", strings)) {
             Assert.assertTrue(strings.get(0).equals("Gjemblen"));
             Assert.assertTrue(strings.get(1).equals("Svarvaa"));
             Assert.assertTrue(strings.get(2).equals("Jonas"));
@@ -48,7 +45,7 @@ public class LevenshteinDistanceTest {
             Assert.assertTrue(strings.get(4).equals("Anders"));
         }
 
-        for(String s : LevenshteinDistance.compare("ppa",strings)) {
+        for (String s : LevenshteinDistance.compare("ppa", strings)) {
             Assert.assertTrue(strings.get(0).equals("Chuppa"));
             Assert.assertTrue(strings.get(1).equals("Jonas"));
             Assert.assertTrue(strings.get(2).equals("Svarvaa"));

@@ -1,11 +1,8 @@
 package util;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Jonas
- * Date: 05.05.12
- * Time: 00:56
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: Jonas Date: 05.05.12 Time: 00:56 To change
+ * this template use File | Settings | File Templates.
  */
 public class UnsignedByteAsShort {
 

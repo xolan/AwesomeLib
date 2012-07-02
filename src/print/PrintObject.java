@@ -23,16 +23,25 @@ public class PrintObject {
         this.colLengths.put("type", 4);
         this.colLengths.put("value", 10);
         try {
-            for(Field f : this.fields) {
-                if(this.colLengths.get("name") < f.getName().length()) colLengths.put("name", f.getName().length());
-                if(this.colLengths.get("type") < f.getType().toString().length()) colLengths.put("type", f.getType().toString().length());
-               // if(this.colLengths.get("value") < f.get(data).toString().length()) colLengths.put("value", f.get(data).toString().length());
+            for (Field f : this.fields) {
+                if (this.colLengths.get("name") < f.getName().length())
+                    colLengths.put("name", f.getName().length());
+                if (this.colLengths.get("type") < f.getType().toString()
+                        .length())
+                    colLengths.put("type", f.getType().toString().length());
+                // if(this.colLengths.get("value") <
+                // f.get(data).toString().length()) colLengths.put("value",
+                // f.get(data).toString().length());
             }
-            for(Method m : this.methods) {
-                if(this.colLengths.get("name") < m.getName().length()) colLengths.put("name", m.getName().length());
-                if(this.colLengths.get("type") < m.getReturnType().toString().length()) colLengths.put("type", m.getReturnType().toString().length());
+            for (Method m : this.methods) {
+                if (this.colLengths.get("name") < m.getName().length())
+                    colLengths.put("name", m.getName().length());
+                if (this.colLengths.get("type") < m.getReturnType().toString()
+                        .length())
+                    colLengths.put("type", m.getReturnType().toString()
+                            .length());
             }
-        } catch(Exception iae) {
+        } catch (Exception iae) {
             System.err.println(iae);
         }
     }
@@ -72,13 +81,14 @@ public class PrintObject {
 
     @Override
     public String toString() {
-        if(this.decorator != null) {
+        if (this.decorator != null) {
             return this.decorator.getOutput();
         } else {
             try {
                 throw new Exception("PrintObjectDecorator not set.");
             } catch (Exception e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace(); // To change body of catch statement use
+                                     // File | Settings | File Templates.
             }
             return null;
         }
