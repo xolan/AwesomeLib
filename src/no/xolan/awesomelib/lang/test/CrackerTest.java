@@ -3,11 +3,13 @@ package no.xolan.awesomelib.lang.test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 import junit.framework.Assert;
 
 import no.xolan.awesomelib.lang.Cracker;
 import no.xolan.awesomelib.lang.Cracker.METHOD;
+import no.xolan.awesomelib.util.Localization;
 
 import org.junit.Test;
 
@@ -19,7 +21,7 @@ public class CrackerTest {
     
     private void setup() {
         crack = new Cracker();
-        List<String> inputs = crack.generateTestList((long) Math.pow(2, 4));
+        List<String> inputs = generateTestList((long) Math.pow(2, 4));
         crack.addInputs(inputs);
 
         ArrayList<String> targets = new ArrayList<>();
@@ -46,6 +48,17 @@ public class CrackerTest {
         compareMD5.put("4", "a87ff679a2f3e71d9181a67b7542122c");
         compareMD5.put("5", "e4da3b7fbbce2345d7772b0674a318d5");
         compareMD5.put("8", "c9f0f895fb98ab9159f51fd0297e236d");
+    }
+    
+    public List<String> generateTestList(long maxSize) {
+        List<String> tests = new ArrayList<>();
+        for (int i = 0; i < maxSize; i++) {
+            if((100*((float)(i)/(maxSize-1))) % 1 == 0) {
+                Logger.getLogger(Localization.getInstance().get("name")).info("Loading: " + (100*((float)(i)/(maxSize-1))) + "%");    
+            }
+            tests.add(Integer.toString(i));
+        }
+        return tests;
     }
     
     private void runAssertions(Cracker.METHOD method) {

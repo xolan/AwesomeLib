@@ -154,17 +154,6 @@ public class Cracker implements CrackerAttackWithCallbackListener {
         Logger.getLogger(Localization.getInstance().get("name")).info(Localization.getInstance().get("runtime") + this.getRunTime() + ".");
     }
 
-    public List<String> generateTestList(long maxSize) {
-        List<String> tests = new ArrayList<>();
-        for (int i = 0; i < maxSize; i++) {
-            if((100*((float)(i)/(maxSize-1))) % 1 == 0) {
-                Logger.getLogger(Localization.getInstance().get("name")).info("Loading: " + (100*((float)(i)/(maxSize-1))) + "%");    
-            }
-            tests.add(Integer.toString(i));
-        }
-        return tests;
-    }
-
     public ConcurrentHashMap<String, String> getResults() {
         return this.results;
     }
