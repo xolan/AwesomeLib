@@ -178,24 +178,6 @@ public class Cracker implements CrackerAttackWithCallbackListener {
 
     }
 
-    public class CrackerAttackWithCallbackThread implements Runnable {
-
-        private final CrackerAttackThread task;
-        private final CrackerAttackWithCallbackListener listener;
-
-        public CrackerAttackWithCallbackThread(CrackerAttackThread task, CrackerAttackWithCallbackListener listener) {
-            this.task = task;
-            this.listener = listener;
-        }
-
-        @Override
-        public void run() {
-            this.task.run();
-            this.listener.finished(this.task.getRuntime(), this.task.getOutput());
-        }
-
-    }
-
     public class CrackerAttackThread extends Thread {
 
         private int min, max;
