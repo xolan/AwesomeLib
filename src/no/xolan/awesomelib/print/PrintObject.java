@@ -1,4 +1,4 @@
-package print;
+package no.xolan.awesomelib.print;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

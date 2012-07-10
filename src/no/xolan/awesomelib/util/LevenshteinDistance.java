@@ -1,4 +1,4 @@
-package util;
+package no.xolan.awesomelib.util;
 
 import java.util.ArrayList;
 import java.util.Collections;

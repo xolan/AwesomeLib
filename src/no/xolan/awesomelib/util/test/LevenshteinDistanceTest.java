@@ -1,4 +1,6 @@
-package util;
+package no.xolan.awesomelib.util.test;
+
+import no.xolan.awesomelib.util.LevenshteinDistance;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package util;
+package no.xolan.awesomelib.util;
 
 /**
  * Created with IntelliJ IDEA. User: Jonas Date: 05.05.12 Time: 00:56 To change

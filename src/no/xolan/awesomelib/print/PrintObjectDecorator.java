@@ -1,4 +1,4 @@
-package print;
+package no.xolan.awesomelib.print;
 
 public interface PrintObjectDecorator {
 

@@ -1,9 +1,11 @@
-package util;
+package no.xolan.awesomelib.util.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import no.xolan.awesomelib.util.LevenshteinDistance;
 
 public class LevenshteinDistanceLiveTest {
 
